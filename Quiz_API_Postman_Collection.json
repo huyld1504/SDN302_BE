@@ -1,0 +1,403 @@
+{
+  "info": {
+    "name": "Quiz API Collection",
+    "description": "Complete API collection for Quiz and Question management system",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:5000/api/v1",
+      "type": "string"
+    },
+    {
+      "key": "quizId",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "questionId",
+      "value": "",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "Quiz Endpoints",
+      "item": [
+        {
+          "name": "Get All Quizzes",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/quizzes",
+              "host": ["{{baseUrl}}"],
+              "path": ["quizzes"]
+            },
+            "description": "Get all quizzes with populated questions"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Quizzes with Title Filter",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/quizzes?title=geography",
+              "host": ["{{baseUrl}}"],
+              "path": ["quizzes"],
+              "query": [
+                {
+                  "key": "title",
+                  "value": "geography"
+                }
+              ]
+            },
+            "description": "Get quizzes filtered by title (case-insensitive)"
+          },
+          "response": []
+        },
+        {
+          "name": "Create Quiz",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"World Geography Quiz\",\n  \"description\": \"Test your knowledge of world geography, capitals, and landmarks. This quiz covers major countries, their capitals, and famous geographical features.\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/quizzes",
+              "host": ["{{baseUrl}}"],
+              "path": ["quizzes"]
+            },
+            "description": "Create a new quiz"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Quiz by ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/quizzes/{{quizId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["quizzes", "{{quizId}}"]
+            },
+            "description": "Get a specific quiz by ID with populated questions"
+          },
+          "response": []
+        },
+        {
+          "name": "Update Quiz",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"Updated World Geography Quiz\",\n  \"description\": \"Updated description for the geography quiz with more comprehensive coverage.\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/quizzes/{{quizId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["quizzes", "{{quizId}}"]
+            },
+            "description": "Update an existing quiz"
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Quiz",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/quizzes/{{quizId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["quizzes", "{{quizId}}"]
+            },
+            "description": "Delete a quiz by ID"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Quiz with Capital Questions",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/quizzes/{{quizId}}/populate",
+              "host": ["{{baseUrl}}"],
+              "path": ["quizzes", "{{quizId}}", "populate"]
+            },
+            "description": "Get quiz with questions containing 'capital' keyword"
+          },
+          "response": []
+        },
+        {
+          "name": "Add Single Question to Quiz",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"text\": \"What is the capital of Australia?\",\n  \"options\": [\"Sydney\", \"Melbourne\", \"Canberra\", \"Brisbane\"],\n  \"keywords\": [\"capital\", \"australia\", \"geography\"],\n  \"correctAnswerIndex\": 2\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/quizzes/{{quizId}}/question",
+              "host": ["{{baseUrl}}"],
+              "path": ["quizzes", "{{quizId}}", "question"]
+            },
+            "description": "Add a single new question to an existing quiz"
+          },
+          "response": []
+        },
+        {
+          "name": "Add Multiple Questions to Quiz",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"questions\": [\n    {\n      \"text\": \"What is the capital of Brazil?\",\n      \"options\": [\"São Paulo\", \"Rio de Janeiro\", \"Brasília\", \"Salvador\"],\n      \"keywords\": [\"capital\", \"brazil\", \"south america\"],\n      \"correctAnswerIndex\": 2\n    },\n    {\n      \"text\": \"What is the capital of Canada?\",\n      \"options\": [\"Toronto\", \"Vancouver\", \"Montreal\", \"Ottawa\"],\n      \"keywords\": [\"capital\", \"canada\", \"north america\"],\n      \"correctAnswerIndex\": 3\n    },\n    {\n      \"text\": \"Which desert is the largest in the world?\",\n      \"options\": [\"Sahara Desert\", \"Arabian Desert\", \"Antarctic Desert\", \"Gobi Desert\"],\n      \"keywords\": [\"desert\", \"geography\", \"world\"],\n      \"correctAnswerIndex\": 2\n    }\n  ]\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/quizzes/{{quizId}}/questions",
+              "host": ["{{baseUrl}}"],
+              "path": ["quizzes", "{{quizId}}", "questions"]
+            },
+            "description": "Add multiple new questions to an existing quiz"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Question Endpoints",
+      "item": [
+        {
+          "name": "Get All Questions",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/questions",
+              "host": ["{{baseUrl}}"],
+              "path": ["questions"]
+            },
+            "description": "Get all questions"
+          },
+          "response": []
+        },
+        {
+          "name": "Create Question",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"text\": \"What is the capital of France?\",\n  \"options\": [\"London\", \"Berlin\", \"Paris\", \"Madrid\"],\n  \"keywords\": [\"capital\", \"france\", \"europe\"],\n  \"correctAnswerIndex\": 2\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/questions",
+              "host": ["{{baseUrl}}"],
+              "path": ["questions"]
+            },
+            "description": "Create a new question"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Question by ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/questions/{{questionId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["questions", "{{questionId}}"]
+            },
+            "description": "Get a specific question by ID"
+          },
+          "response": []
+        },
+        {
+          "name": "Update Question",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"text\": \"What is the capital city of France?\",\n  \"options\": [\"London\", \"Berlin\", \"Paris\", \"Madrid\"],\n  \"keywords\": [\"capital\", \"france\", \"europe\", \"city\"],\n  \"correctAnswerIndex\": 2\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/questions/{{questionId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["questions", "{{questionId}}"]
+            },
+            "description": "Update an existing question"
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Question",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/questions/{{questionId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["questions", "{{questionId}}"]
+            },
+            "description": "Delete a question by ID"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Sample Test Data",
+      "item": [
+        {
+          "name": "Create Geography Quiz with Questions",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"European Capitals Quiz\",\n  \"description\": \"Test your knowledge of European capital cities\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/quizzes",
+              "host": ["{{baseUrl}}"],
+              "path": ["quizzes"]
+            },
+            "description": "Step 1: Create a geography quiz"
+          },
+          "response": []
+        },
+        {
+          "name": "Add Sample Capital Questions",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"questions\": [\n    {\n      \"text\": \"What is the capital of Germany?\",\n      \"options\": [\"Munich\", \"Berlin\", \"Hamburg\", \"Frankfurt\"],\n      \"keywords\": [\"capital\", \"germany\", \"europe\"],\n      \"correctAnswerIndex\": 1\n    },\n    {\n      \"text\": \"What is the capital of Italy?\",\n      \"options\": [\"Milan\", \"Rome\", \"Naples\", \"Venice\"],\n      \"keywords\": [\"capital\", \"italy\", \"europe\"],\n      \"correctAnswerIndex\": 1\n    },\n    {\n      \"text\": \"What is the capital of Spain?\",\n      \"options\": [\"Barcelona\", \"Valencia\", \"Madrid\", \"Seville\"],\n      \"keywords\": [\"capital\", \"spain\", \"europe\"],\n      \"correctAnswerIndex\": 2\n    },\n    {\n      \"text\": \"Which river flows through London?\",\n      \"options\": [\"River Seine\", \"River Thames\", \"River Danube\", \"River Rhine\"],\n      \"keywords\": [\"river\", \"london\", \"geography\"],\n      \"correctAnswerIndex\": 1\n    },\n    {\n      \"text\": \"What is the capital of Netherlands?\",\n      \"options\": [\"Rotterdam\", \"The Hague\", \"Amsterdam\", \"Utrecht\"],\n      \"keywords\": [\"capital\", \"netherlands\", \"europe\"],\n      \"correctAnswerIndex\": 2\n    }\n  ]\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/quizzes/{{quizId}}/questions",
+              "host": ["{{baseUrl}}"],
+              "path": ["quizzes", "{{quizId}}", "questions"]
+            },
+            "description": "Step 2: Add multiple capital questions to the quiz (replace {{quizId}} with actual quiz ID)"
+          },
+          "response": []
+        }
+      ]
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          ""
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          ""
+        ]
+      }
+    }
+  ]
+}
